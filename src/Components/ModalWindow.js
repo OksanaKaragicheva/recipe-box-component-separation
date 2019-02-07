@@ -1,7 +1,8 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
 import FormInModal from '../Components/FormInModal';
+import ButtonToolbarOfModal from '../Components/ButtonToolbarOfModal';
+
 import { Button } from 'react-bootstrap';
 import { Modal } from 'react-bootstrap';
 
@@ -23,12 +24,11 @@ const ModalWindow = (props) => {
          />
        </Modal.Body>
        <Modal.Footer>
-         <Button variant="secondary" type="submit" form="myForm" value="Submit" onClick={props.addRecipeButModal}>
-           {props.addButHeader}
-         </Button>
-         <Button variant="outline-warning" onClick={props.handleClose}>
-           <FontAwesomeIcon icon="times" />
-         </Button>
+         <ButtonToolbarOfModal
+          addButHeader={props.addButHeader}
+          addRecipeButModal={props.addRecipeButModal}
+          handleClose={props.handleClose}
+         />
        </Modal.Footer>
      </Modal>
     </>

@@ -1,5 +1,4 @@
 import React from 'react';
-
 import Recipe from '../Components/Recipe';
 
 const ListOfRecipes = (props) => {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import ButtonToolbarOfRecipe from '../Components/ButtonToolbarOfRecipe';
 
 import { Button } from 'react-bootstrap';
 import { ButtonToolbar } from 'react-bootstrap';
@@ -21,17 +21,14 @@ const Recipe = (props) => {
      <Collapse in={JSON.parse(props.recipe.isRecipeCollapsed)}>
        <div id={`collapse${props.index}`}>
          {props.recipe.ingredients}
-       <ButtonToolbar style={{"marginTop": "10px"}}>
-         <Button variant="info" onClick={() => props.openCardForEdit(props.index)}>
-           <FontAwesomeIcon icon="pencil-alt" />
-         </Button>
-         <Button variant="danger" onClick={() => props.delete(props.index)}>
-           <FontAwesomeIcon icon="trash-alt" />
-         </Button>
-       </ButtonToolbar>
+       <ButtonToolbarOfRecipe
+        index={props.index}
+        openCardForEdit={props.openCardForEdit}
+        delete={props.delete}
+       />
        </div>
-    </Collapse>
-   </div>
+     </Collapse>
+    </div>
   );
 }
 
