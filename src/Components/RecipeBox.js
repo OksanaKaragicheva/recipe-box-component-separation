@@ -72,7 +72,13 @@ class RecipeBox extends Component {
   }
 
     handleClose() {
-      this.setState({ show: false });
+      this.setState({
+        show: false,
+        modalHeader: "Add a Recipe",
+        title: "",
+        ingredients: "",
+        addButHeader: "Add"
+      });
     }
 
     handleShow() {
