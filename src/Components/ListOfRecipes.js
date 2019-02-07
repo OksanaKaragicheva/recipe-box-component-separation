@@ -9,17 +9,17 @@ const ListOfRecipes = (props) => {
       {props.recipes.map((recipe, index) => {
         return (
           <Recipe
-          key={index}
-          recipe={recipe}
-          index={index}
-          handleCollapse={props.handleCollapse}
-          openCardForEdit={props.openCardForEdit}
-          delete={props.delete}/>
+           key={index}
+           recipe={recipe}
+           index={index}
+           handleCollapse={props.handleCollapse}
+           openCardForEdit={props.openCardForEdit}
+           delete={props.delete}/>
         )
-      })
+       })
       }
     </>
   );
 }
 
-  export default ListOfRecipes;
+export default ListOfRecipes;

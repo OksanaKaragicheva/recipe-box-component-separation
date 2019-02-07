@@ -11,7 +11,7 @@ library.add(faTimes, faPencilAlt, faTrashAlt);
 
 class RecipeBox extends Component {
   constructor(props, context) {
-    super(props, context);
+  super(props, context);
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -21,7 +21,6 @@ class RecipeBox extends Component {
     this.handleTitle = this.handleTitle.bind(this);
     this.handleIngredients = this.handleIngredients.bind(this);
     this.addRecipeButModal = this.addRecipeButModal.bind(this);
-
 
     this.state = {
       index: 0,
@@ -36,61 +35,71 @@ class RecipeBox extends Component {
     };
   }
 
-  componentWillMount() {
-    if (localStorage.getItem("_oksanakaragicheva_recipes") === null) {
-      localStorage.setItem(
-        "_oksanakaragicheva_recipes",
-        JSON.stringify([
-          {
-            title: "Borsch",
-            ingredients: "potato, meat, cabbage, onion, carrot, beet",
-            isRecipeCollapsed: 'false'
-          }
-        ])
-      );
+componentWillMount() {
+  if (localStorage.getItem("_oksanakaragicheva_recipes") === null) {
+    localStorage.setItem(
+      "_oksanakaragicheva_recipes",
+      JSON.stringify([
+        {
+          title: "Borsch",
+          ingredients: "potato, meat, cabbage, onion, carrot, beet",
+          isRecipeCollapsed: 'false'
+        }
+      ])
+    );
       this.setState({
         recipes: JSON.parse(localStorage.getItem("_oksanakaragicheva_recipes"))
       });
-    }
   }
+}
 
-  handleTitle(e) {
-    this.setState({ title: e.target.value });
+handleTitle(e) {
+  this.setState({
+    title: e.target.value
+  });
+}
+
+handleIngredients(e) {
+  this.setState({
+    ingredients: e.target.value
+  });
+}
+
+handleSubmit(event) {
+  const form = event.currentTarget;
+  if (form.checkValidity() === false) {
+     event.preventDefault();
+     event.stopPropagation();
   }
+    this.setState({
+      validated: true,
+      show: true
+    });
+}
 
-  handleIngredients(e) {
-    this.setState({ ingredients: e.target.value });
-  }
+handleClose() {
+  this.setState({
+    show: false,
+    modalHeader: "Add a Recipe",
+    addButHeader: "Add",
+    title: "",
+    ingredients: ""
+  });
+}
 
-  handleSubmit(event) {
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
-    this.setState({ validated: true, show: true});
-  }
+handleShow() {
+  this.setState({
+    show: true,
+    validated: false
+  });
+}
 
-    handleClose() {
-      this.setState({
-        show: false,
-        modalHeader: "Add a Recipe",
-        title: "",
-        ingredients: "",
-        addButHeader: "Add"
-      });
-    }
-
-    handleShow() {
-      this.setState({ show: true, validated: false });
-    }
-
-    handleCollapse(i) {
-      console.log(this.state.title);
-        console.log(this.state.ingredients);
-      this.setState({
-        index: i,
-        recipes: this.state.recipes
+handleCollapse(i) {
+  console.log(this.state.title);
+  console.log(this.state.ingredients);
+  this.setState({
+    index: i,
+    recipes: this.state.recipes
             .slice(0, i)
             .concat(
               {
@@ -100,23 +109,21 @@ class RecipeBox extends Component {
               },
               this.state.recipes.slice(i + 1)
             )
-      });
+  });
+     localStorage.setItem(
+       "_oksanakaragicheva_recipes",
+       JSON.stringify(this.state.recipes)
+    );
+}
 
-      localStorage.setItem(
-        "_oksanakaragicheva_recipes",
-        JSON.stringify(this.state.recipes)
-      );
-
-    }
-
-    addRecipeButModal() {
-    this.setState({
-      show: false,
-      title: this.state.title,
-      ingredients: this.state.ingredients,
-      modalHeader: "Add a Recipe",
-      addButHeader: "Add",
-      recipes: this.state.validated !== false ?
+addRecipeButModal() {
+  this.setState({
+    show: false,
+    title: this.state.title,
+    ingredients: this.state.ingredients,
+    modalHeader: "Add a Recipe",
+    addButHeader: "Add",
+    recipes: this.state.validated !== false ?
       (
         this.state.addButHeader === "Add"
           ? [
@@ -133,8 +140,7 @@ class RecipeBox extends Component {
                 },
                 this.state.recipes.slice(this.state.index + 1)
               )): this.state.recipes
-    });
-
+  });
     localStorage.setItem(
       "_oksanakaragicheva_recipes",
       JSON.stringify(
@@ -155,57 +161,60 @@ class RecipeBox extends Component {
               )
       )
     );
-  }
+}
 
-  openCardForEdit(i) {
-    this.setState({
-      index: i,
-      show: true,
-      title: this.state.recipes[i].title,
-      ingredients: this.state.recipes[i].ingredients,
-      modalHeader: "Edit a Recipe",
-      addButHeader: "Edit"
-    });
-  }
+openCardForEdit(i) {
+  this.setState({
+    index: i,
+    show: true,
+    title: this.state.recipes[i].title,
+    ingredients: this.state.recipes[i].ingredients,
+    modalHeader: "Edit a Recipe",
+    addButHeader: "Edit"
+  });
+}
 
-  delete(i) {
-    this.state.recipes.splice(i, 1);
-    this.setState({
-      recipes: this.state.recipes
-    });
+delete(i) {
+  this.state.recipes.splice(i, 1);
+  this.setState({
+    recipes: this.state.recipes
+  });
     localStorage.setItem(
       "_oksanakaragicheva_recipes",
       JSON.stringify(this.state.recipes)
     );
-  }
-
-  render() {
-    return(
-    <>
-    <MainAddButton
-    handleShow={this.handleShow}/>
-    <ModalWindow
-    handleSubmit={this.handleSubmit}
-    handleClose={this.handleClose}
-    validated={this.state.validated}
-    show={this.state.show}
-    modalHeader={this.state.modalHeader}
-    addButHeader={this.state.addButHeader}
-    addRecipeButModal={this.addRecipeButModal}
-    title={this.state.title}
-    ingredients={this.state.ingredients}
-    handleTitle={this.handleTitle}
-    handleIngredients={this.handleIngredients}
-    isRecipeCollapsed={this.state.isRecipeCollapsed}/>
-    <ListOfRecipes
-    handleCollapse={this.handleCollapse}
-    recipes={this.state.recipes}
-    index={this.state.index}
-    openCardForEdit={this.openCardForEdit}
-    delete={this.delete}/>
-    </>
-  );
 }
+
+render() {
+  return(
+    <>
+      <MainAddButton
+       handleShow={this.handleShow}
+      />
+      <ModalWindow
+       handleSubmit={this.handleSubmit}
+       handleClose={this.handleClose}
+       validated={this.state.validated}
+       show={this.state.show}
+       modalHeader={this.state.modalHeader}
+       addButHeader={this.state.addButHeader}
+       addRecipeButModal={this.addRecipeButModal}
+       title={this.state.title}
+       ingredients={this.state.ingredients}
+       handleTitle={this.handleTitle}
+       handleIngredients={this.handleIngredients}
+       isRecipeCollapsed={this.state.isRecipeCollapsed}
+      />
+      <ListOfRecipes
+       handleCollapse={this.handleCollapse}
+       recipes={this.state.recipes}
+       index={this.state.index}
+       openCardForEdit={this.openCardForEdit}
+       delete={this.delete}
+      />
+   </>
+  );
+ }
 }
 
 export default RecipeBox;

@@ -1,16 +1,14 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import RecipeBox from './Components/RecipeBox';
 import './App.sass';
 
-class App extends Component {
-  render() {
-    return (
+const App = (props) => {
+  return (
       <div>
         <RecipeBox />
       </div>
     );
   }
-}
 
 export default App;

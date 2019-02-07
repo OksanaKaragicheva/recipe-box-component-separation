@@ -32,9 +32,7 @@ const ModalWindow = (props) => {
        </Modal.Footer>
      </Modal>
     </>
-    );
-
-
+  );
 }
 
-  export default ModalWindow;
+export default ModalWindow;
