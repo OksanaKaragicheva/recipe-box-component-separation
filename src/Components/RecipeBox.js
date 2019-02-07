@@ -16,12 +16,18 @@ class RecipeBox extends Component {
     this.handleClose = this.handleClose.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleCollapse = this.handleCollapse.bind(this);
+    this.openCardForEdit = this.openCardForEdit.bind(this);
+    this.delete = this.delete.bind(this);
+    this.handleTitle = this.handleTitle.bind(this);
+    this.handleIngredients = this.handleIngredients.bind(this);
+    this.addRecipeButModal = this.addRecipeButModal.bind(this);
+
 
     this.state = {
       index: 0,
       show: false,
-      open: false,
       validated: false,
+      isRecipeCollapsed: false,
       title: "",
       ingredients: "",
       modalHeader: "Add a Recipe",
@@ -37,7 +43,8 @@ class RecipeBox extends Component {
         JSON.stringify([
           {
             title: "Borsch",
-            ingredients: "potato, meat, cabbage, onion, carrot, beet"
+            ingredients: "potato, meat, cabbage, onion, carrot, beet",
+            isRecipeCollapsed: 'false'
           }
         ])
       );
@@ -72,8 +79,28 @@ class RecipeBox extends Component {
       this.setState({ show: true, validated: false });
     }
 
-    handleCollapse() {
-      this.setState({ open: !this.state.open })
+    handleCollapse(i) {
+      console.log(this.state.title);
+        console.log(this.state.ingredients);
+      this.setState({
+        index: i,
+        recipes: this.state.recipes
+            .slice(0, i)
+            .concat(
+              {
+                title: this.state.recipes[i].title,
+                ingredients: this.state.recipes[i].ingredients,
+                isRecipeCollapsed: String(!JSON.parse(this.state.recipes[i].isRecipeCollapsed))
+              },
+              this.state.recipes.slice(i + 1)
+            )
+      });
+
+      localStorage.setItem(
+        "_oksanakaragicheva_recipes",
+        JSON.stringify(this.state.recipes)
+      );
+
     }
 
     addRecipeButModal() {
@@ -83,25 +110,23 @@ class RecipeBox extends Component {
       ingredients: this.state.ingredients,
       modalHeader: "Add a Recipe",
       addButHeader: "Add",
-      recipes:
+      recipes: this.state.validated !== false ?
+      (
         this.state.addButHeader === "Add"
           ? [
               ...this.state.recipes,
-              { title: this.state.title, ingredients: this.state.ingredients }
+              { title: this.state.title, ingredients: this.state.ingredients, isRecipeCollapsed: "false" }
             ]
           : this.state.recipes
               .slice(0, this.state.index)
               .concat(
                 {
                   title: this.state.title,
-                  ingredients: this.state.ingredients
+                  ingredients: this.state.ingredients,
+                  isRecipeCollapsed: this.state.isRecipeCollapsed
                 },
                 this.state.recipes.slice(this.state.index + 1)
-              )
-    });
-    this.setState({
-      title: "",
-      ingredients: ""
+              )): this.state.recipes
     });
 
     localStorage.setItem(
@@ -110,14 +135,15 @@ class RecipeBox extends Component {
         this.state.addButHeader === "Add"
           ? [
               ...this.state.recipes,
-              { title: this.state.title, ingredients: this.state.ingredients }
+              { title: this.state.title, ingredients: this.state.ingredients, isRecipeCollapsed: "false" }
             ]
           : this.state.recipes
               .slice(0, this.state.index)
               .concat(
                 {
                   title: this.state.title,
-                  ingredients: this.state.ingredients
+                  ingredients: this.state.ingredients,
+                  isRecipeCollapsed: "false"
                 },
                 this.state.recipes.slice(this.state.index + 1)
               )
@@ -136,6 +162,17 @@ class RecipeBox extends Component {
     });
   }
 
+  delete(i) {
+    this.state.recipes.splice(i, 1);
+    this.setState({
+      recipes: this.state.recipes
+    });
+    localStorage.setItem(
+      "_oksanakaragicheva_recipes",
+      JSON.stringify(this.state.recipes)
+    );
+  }
+
   render() {
     return(
     <>
@@ -145,8 +182,21 @@ class RecipeBox extends Component {
     handleSubmit={this.handleSubmit}
     handleClose={this.handleClose}
     validated={this.state.validated}
-    show={this.state.show} />
-    <ListOfRecipes open={this.state.open} handleCollapse={this.handleCollapse}/>
+    show={this.state.show}
+    modalHeader={this.state.modalHeader}
+    addButHeader={this.state.addButHeader}
+    addRecipeButModal={this.addRecipeButModal}
+    title={this.state.title}
+    ingredients={this.state.ingredients}
+    handleTitle={this.handleTitle}
+    handleIngredients={this.handleIngredients}
+    isRecipeCollapsed={this.state.isRecipeCollapsed}/>
+    <ListOfRecipes
+    handleCollapse={this.handleCollapse}
+    recipes={this.state.recipes}
+    index={this.state.index}
+    openCardForEdit={this.openCardForEdit}
+    delete={this.delete}/>
     </>
   );
 }

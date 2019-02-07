@@ -1,9 +1,6 @@
 import React from 'react';
 
-import { Button } from 'react-bootstrap';
 import { Form } from 'react-bootstrap';
-import { Col } from 'react-bootstrap';
-import { InputGroup } from 'react-bootstrap';
 
 const FormInModal = (props) => {
  return (
@@ -19,6 +16,8 @@ const FormInModal = (props) => {
              required
              type="text"
              placeholder="Recipe title"
+             value={props.title}
+             onChange={props.handleTitle}
            />
            <Form.Control.Feedback type="invalid">This field must not be empty!</Form.Control.Feedback>
          </Form.Group>
@@ -29,6 +28,8 @@ const FormInModal = (props) => {
              as="textarea"
              type="text"
              placeholder="Ingredients"
+             value={props.ingredients}
+             onChange={props.handleIngredients}
            />
            <Form.Control.Feedback type="invalid">This field must not be empty!</Form.Control.Feedback>
          </Form.Group>

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import FormInModal from '../Components/FormInModal';
@@ -10,14 +10,21 @@ const ModalWindow = (props) => {
     <>
        <Modal show={props.show} onHide={props.handleClose}>
        <Modal.Header closeButton>
-         <Modal.Title>Modal heading</Modal.Title>
+         <Modal.Title>{props.modalHeader}</Modal.Title>
        </Modal.Header>
        <Modal.Body>
-         <FormInModal onSubmit={props.handleSubmit} validated={props.validated} />
+         <FormInModal
+         onSubmit={props.handleSubmit}
+         validated={props.validated}
+         title={props.title}
+         ingredients={props.ingredients}
+         handleTitle={props.handleTitle}
+         handleIngredients={props.handleIngredients}
+         />
        </Modal.Body>
        <Modal.Footer>
-         <Button variant="secondary" type="submit" form="myForm" value="Submit" onClick={props.handleClose}>
-           Add
+         <Button variant="secondary" type="submit" form="myForm" value="Submit" onClick={props.addRecipeButModal}>
+           {props.addButHeader}
          </Button>
          <Button variant="outline-warning" onClick={props.handleClose}>
            <FontAwesomeIcon icon="times" />
