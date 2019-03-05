@@ -2,7 +2,7 @@ import React from 'react';
 import ButtonToolbarOfRecipe from '../Components/ButtonToolbarOfRecipe';
 
 import { Button } from 'react-bootstrap';
-import { ButtonToolbar } from 'react-bootstrap';
+//import { ButtonToolbar } from 'react-bootstrap';
 import { Collapse } from 'react-bootstrap';
 
 const Recipe = (props) => {

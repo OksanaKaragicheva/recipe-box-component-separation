@@ -2,7 +2,7 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { Button } from 'react-bootstrap';
-import { Modal } from 'react-bootstrap';
+//import { Modal } from 'react-bootstrap';
 
 const ButtonToolbarOfModal = (props) => {
   return (

@@ -98,7 +98,6 @@ handleCollapse(i) {
   console.log(this.state.title);
   console.log(this.state.ingredients);
   this.setState({
-    index: i,
     recipes: this.state.recipes
             .slice(0, i)
             .concat(
@@ -208,7 +207,6 @@ render() {
       <ListOfRecipes
        handleCollapse={this.handleCollapse}
        recipes={this.state.recipes}
-       index={this.state.index}
        openCardForEdit={this.openCardForEdit}
        delete={this.delete}
       />

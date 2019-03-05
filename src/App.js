@@ -1,12 +1,12 @@
 import React from 'react';
 
-import RecipeBox from './Components/RecipeBox';
+import Container from './Containers/RecipeBox';
 import './App.sass';
 
 const App = (props) => {
   return (
       <div>
-        <RecipeBox />
+        <Container />
       </div>
     );
   }
